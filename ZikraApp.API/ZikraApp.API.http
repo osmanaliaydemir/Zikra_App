@@ -1,0 +1,6 @@
+@ZikraApp.API_HostAddress = http://localhost:5249
+
+GET {{ZikraApp.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
