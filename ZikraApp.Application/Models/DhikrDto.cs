@@ -93,6 +93,7 @@ namespace ZikraApp.Application.Models
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public DhikrDto Dhikr { get; set; }
+        public string? Days { get; set; }
     }
 
     public class CreateUserDhikrDto
@@ -100,6 +101,7 @@ namespace ZikraApp.Application.Models
         public Guid DhikrId { get; set; }
         public int DailyTarget { get; set; }
         public TimeSpan? ReminderTime { get; set; }
+        public string? Days { get; set; }
     }
 
     public class UpdateUserDhikrDto
@@ -107,6 +109,7 @@ namespace ZikraApp.Application.Models
         public int DailyTarget { get; set; }
         public TimeSpan? ReminderTime { get; set; }
         public bool IsActive { get; set; }
+        public string? Days { get; set; }
     }
 
     public class DhikrProgressDto

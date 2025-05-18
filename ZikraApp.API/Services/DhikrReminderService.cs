@@ -31,9 +31,12 @@ namespace ZikraApp.API.Services
                 try
                 {
                     var currentTime = DateTime.UtcNow;
+                    var today = DateTime.UtcNow.DayOfWeek.ToString();
                     var activeReminders = await _unitOfWork.Repository<UserDhikr>()
-                        .FindAsync(ud => ud.IsActive && 
-                                       ud.ReminderTime.Value.Hours == currentTime.Hour && 
+                        .FindAsync(ud => ud.IsActive &&
+                                       ud.ReminderTime.HasValue &&
+                                       (string.IsNullOrEmpty(ud.Days) || ud.Days.Contains(today)) &&
+                                       ud.ReminderTime.Value.Hours == currentTime.Hour &&
                                        ud.ReminderTime.Value.Minutes == currentTime.Minute);
 
                     foreach (var reminder in activeReminders)

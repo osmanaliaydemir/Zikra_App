@@ -48,5 +48,27 @@ namespace ZikraApp.API.Controllers
             await _unitOfWork.Repository<ZikraApp.Core.Entities.DhikrProgress>().UpdateAsync(progress);
             return NoContent();
         }
+
+        [HttpGet("user/{userId}/history")]
+        public async Task<IActionResult> GetUserDhikrHistory(Guid userId)
+        {
+            var progress = await _unitOfWork.Repository<ZikraApp.Core.Entities.DhikrProgress>()
+                .FindAsync(p => p.UserId == userId);
+            var result = _mapper.Map<IEnumerable<DhikrProgressDto>>(progress);
+            return Ok(result);
+        }
+
+        [HttpGet("user/{userId}/stats")]
+        public async Task<IActionResult> GetUserDhikrStats(Guid userId)
+        {
+            var progress = await _unitOfWork.Repository<ZikraApp.Core.Entities.DhikrProgress>()
+                .FindAsync(p => p.UserId == userId);
+            var total = progress.Sum(p => p.Count);
+            var most = progress.GroupBy(p => p.DhikrId)
+                .OrderByDescending(g => g.Sum(x => x.Count))
+                .Select(g => new { DhikrId = g.Key, Total = g.Sum(x => x.Count) })
+                .FirstOrDefault();
+            return Ok(new { TotalCount = total, MostRecited = most });
+        }
     }
 } 

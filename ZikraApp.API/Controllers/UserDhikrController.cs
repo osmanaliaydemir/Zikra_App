@@ -33,6 +33,7 @@ namespace ZikraApp.API.Controllers
             var userDhikr = _mapper.Map<ZikraApp.Core.Entities.UserDhikr>(dto);
             userDhikr.CreatedAt = DateTime.UtcNow;
             userDhikr.IsActive = true;
+            userDhikr.Days = dto.Days;
             var created = await _unitOfWork.Repository<ZikraApp.Core.Entities.UserDhikr>().AddAsync(userDhikr);
             return CreatedAtAction(nameof(GetUserDhikrs), new { userId = created.UserId }, _mapper.Map<UserDhikrDto>(created));
         }
@@ -46,6 +47,7 @@ namespace ZikraApp.API.Controllers
 
             _mapper.Map(dto, userDhikr);
             userDhikr.UpdatedAt = DateTime.UtcNow;
+            userDhikr.Days = dto.Days;
             await _unitOfWork.Repository<ZikraApp.Core.Entities.UserDhikr>().UpdateAsync(userDhikr);
             return NoContent();
         }

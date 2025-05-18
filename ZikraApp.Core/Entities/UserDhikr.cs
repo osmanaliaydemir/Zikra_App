@@ -12,6 +12,7 @@ namespace ZikraApp.Core.Entities
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public string? Days { get; set; } // Örn: "Monday,Wednesday,Friday"
         
         // Navigation properties
         public User User { get; set; }
